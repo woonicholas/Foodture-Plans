@@ -17,7 +17,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-global.db = firebase.firestore();
+global.fs = firebase.firestore();
 
 const PORT = process.env.PORT || 3001;
 
