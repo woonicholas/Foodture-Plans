@@ -118,7 +118,7 @@ exports.postLog = async (req, res, next) => {
     } else {
         try{
             let log;
-            log = new models.calorieDietLog(body.food,body.calories);
+            log = new models.GeneralFoodLog(body.item,body.calories,body.fat.quantity,body.carbs.quantity,body.sugar.quantity,body.protein.quantity);
             console.log(log.getLog());
             await foodLogRef.collection(currentTime).add(log.getLog(),{merge: true});
             console.log("Successfully posted log to user food log: " + doc.data().email);
@@ -129,16 +129,29 @@ exports.postLog = async (req, res, next) => {
                     //check if daily totals doc for day exists
                     //TO DO: Can add if statements to create different fields for different diets
                     if(docSnapshot.exists) {
-                        dailyTotalRef.update({dailyCalories: firebase.firestore.FieldValue.increment(body.calories)})
+                        dailyTotalRef.update({
+                            dailyCalories: firebase.firestore.FieldValue.increment(body.calories),
+                            dailyFat: firebase.firestore.FieldValue.increment(body.fat.quantity),
+                            dailyCarbs: firebase.firestore.FieldValue.increment(body.carbs.quantity),
+                            dailySugar: firebase.firestore.FieldValue.increment(body.sugar.quantity),
+                            dailyProtein: firebase.firestore.FieldValue.increment(body.protein.quantity)
+                        })
                         console.log("[INFO] Successfully updated daily totals for: " + currentTime)
                     } else {
-                        dailyTotalRef.set({dailyCalories: firebase.firestore.FieldValue.increment(body.calories)})
+                        dailyTotalRef.set({
+                            dailyCalories: firebase.firestore.FieldValue.increment(body.calories),
+                            dailyFat: firebase.firestore.FieldValue.increment(body.fat.quantity),
+                            dailyCarbs: firebase.firestore.FieldValue.increment(body.carbs.quantity),
+                            dailySugar: firebase.firestore.FieldValue.increment(body.sugar.quantity),
+                            dailyProtein: firebase.firestore.FieldValue.increment(body.protein.quantity)
+                        })
+                        console.log("[INFO] Successfully updated daily totals for: " + currentTime)
                         console.log("[INFO] Successfully created daily totals for: " + currentTime)
                     }
                 });
 
             // const updatedDoc = await foodLogRef.collection(currentTime).get();
-            res.status(200).send({"Message": "Successfully logged food data"});
+            res.status(200).send({"Message": "Successfully logged food data and updated daily totals"});
         } catch (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
