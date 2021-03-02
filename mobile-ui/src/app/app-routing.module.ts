@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'onboarding-one',
+    loadChildren: () => import('./onboarding-one/onboarding-one.module').then( m => m.OnboardingOnePageModule)
+  },
+  {
+    path: 'onboarding-two',
+    loadChildren: () => import('./onboarding-two/onboarding-two.module').then( m => m.OnboardingTwoPageModule)
+  },
+  {
+    path: 'landing-page',
+    loadChildren: () => import('./landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,44 @@
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Welcome</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <br/> -->
+  <ion-text class = "ptext" >Welcome! We are happy to join you on your health journey.
+    <p></p>Please fill out this questionnaire to help us build your profile.</ion-text>
+  <ion-item> 
+    <ion-label id = "label"><strong>Name</strong></ion-label>
+    <ion-input id = "ioninput" placeholder = "John Smith" type = "text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>Age</strong></ion-label>
+    <ion-input id = "ioninput" placeholder = "32"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label ><strong>Sex</strong></ion-label>
+    <ion-select placeholder="Gender" interface="popover">
+      <ion-select-option value="Male">Male</ion-select-option>
+      <ion-select-option value="Female">Female</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-grid>
+    <ion-row text-end>
+      <ion-col>
+      </ion-col>
+      <ion-col><ion-button id="btnSpara" size="small" color="secondary" (click)= "onClickSubmit()">➜</ion-button></ion-col>
+      
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-row >   -->
+    
+  <!-- </ion-row> -->
+
+</ion-content>

@@ -25,6 +25,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json()) // with this you can send the data to api in json format
+app.use(cors());
 
 //  Connect all our routes to our application
 app.use('/',routes);

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Welcome</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text class = "ptext" >Please provide us with your height and weight to measure progress:</ion-text>
+  <ion-item> 
+    <ion-label id = "label"><strong>Height (in)</strong></ion-label>
+    <ion-input id = "ioninput" placeholder = "173" type = "text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>Weight (lbs)</strong></ion-label>
+    <ion-input id = "ioninput" placeholder = "132"></ion-input>
+  </ion-item>
+  <ion-text class = "ptext" ><p></p>Please provide us with your target weight:</ion-text>
+  <ion-item>
+    <ion-label><strong>Weight (lbs)</strong></ion-label>
+    <ion-input id = "ioninput" placeholder = "132"></ion-input>
+  </ion-item>
+  <ion-grid>
+    <ion-row text-end>
+      <ion-col>
+      </ion-col>
+      <ion-col><ion-button id="btnSpara" size="small" color="secondary" (click)= "onClickSubmit()">➜</ion-button></ion-col>
+      
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
