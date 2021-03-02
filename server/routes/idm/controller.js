@@ -17,7 +17,7 @@ exports.signup = (req, res, next) => {
         // Signed in
         var user = userCredential.user;
         console.log("Successfully registered User: " + user.email)
-        await db.collection("users").add({
+        await fs.collection('users').doc(user.uid).set({
             email: user.email,
             uid: user.uid
         });
