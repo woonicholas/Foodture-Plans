@@ -281,7 +281,7 @@ exports.getDailyTotals = async (req, res, next) => {
         try{
             
             // const updatedDoc = await foodLogRef.collection(currentTime).get();
-            res.status(200).send({"Message": "Successfully retrieved food data logs", "daily-totals": doc.data()});
+            res.status(200).send({"Message": "Successfully retrieved daily totals logs", "daily-totals": doc.data()});
         } catch (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -291,3 +291,91 @@ exports.getDailyTotals = async (req, res, next) => {
     }
 }
 
+exports.postWeightLog = async (req, res, next) => {
+    if (!req.params) {
+        return res.status(400).send(({
+            message: "params cannot be empty. please supply a uid"
+        }))
+    } if(!req.body) {
+        return res.status(400).send(({
+            message: "body cannot be empty"
+        }))
+    } if(!req.body.weight) {
+        return res.status(400).send(({
+            message: "Please supply body with a weight number"
+        }))
+    } if(!req.body.unit) {
+        return res.status(400).send(({
+            message: "Please supply body with a unit of measurement (i.e. lb, kg)"
+        }))
+    }
+
+    console.log("params: ", req.params);
+
+    console.log("body: ", req.body);
+
+    const uid = req.params.uid;
+    const body = req.body;
+
+    const currentTime = utils.getCurrentDate(); // can probably get time object from body
+    const userRef = fs.collection('users').doc(uid);
+
+    const weightLogRef = fs.collection('users').doc(uid).collection("weight-logs").doc(currentTime);
+
+    const doc = await userRef.get();
+
+    if(!doc.exists){
+        res.status(404).send({ 'message': 'User Not Found'});
+    } else {
+        try{
+            await weightLogRef.set({"weight": body.weight, "unit": body.unit},{merge: true});
+            console.log("Successfully posted log to user's weight log: " + doc.data().email);
+
+            // const updatedDoc = await foodLogRef.collection(currentTime).get();
+            res.status(200).send({"Message": "Successfully logged weight data"});
+        } catch (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("[ERR] ", errorMessage, ": ", errorCode);
+            res.status(400).send(error);    
+        }
+    }
+}
+
+exports.getWeightLog = async (req, res, next) => {
+    if (!req.params) {
+        return res.status(400).send(({
+            message: "params cannot be empty. please supply a uid"
+        }))
+    } if(!req.body) {
+        return res.status(400).send(({
+            message: "body cannot be empty"
+        }))
+    }
+
+    console.log("params: ", req.params);
+
+    console.log("body: ", req.body);
+
+    const uid = req.params.uid;
+    const date = req.params.date;
+
+    const currentTime = utils.getCurrentDate(); // can probably get time object from body
+
+    const dailyTotalRef = fs.collection('users').doc(uid).collection('weight-logs').doc(date);
+    const doc = await dailyTotalRef.get();
+    if(!doc.exists){
+        res.status(404).send({ 'message': 'User has no weight logs for date specified', date});
+    } else {
+        try{
+            
+            // const updatedDoc = await foodLogRef.collection(currentTime).get();
+            res.status(200).send({"Message": "Successfully retrieved weight log for: " + date, "weight": doc.data()});
+        } catch (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("[ERR] ", errorMessage, ": ", errorCode);
+            res.status(400).send(error);    
+        }
+    }
+}
