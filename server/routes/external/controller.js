@@ -44,6 +44,8 @@ exports.getFoodRecommendation = async (req, res, next) => {
     
     let query_string = `${process.env.EDAMAM_RECIPE_BASE_URL}?app_id=${process.env.EDAMAM_RECIPE_APP_ID}&app_key=${process.env.EDAMAM_RECIPE_APP_KEY}&` + encodeURI(`q=${query}`);
 
+    console.log(query_string)
+
     //accepted: balanced, high-protein, low-fat, low-carb
     if(req.body.diet){
         (req.body.diet).forEach( d => {

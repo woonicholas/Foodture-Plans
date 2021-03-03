@@ -19,11 +19,13 @@ export class LoginModalComponent {
   }
 
 //need to check login and pw 
-  onLoginSubmit(){
-    this.IdmService.signIn(this.username, this.password);
+  onLoginSubmit = async () => {
+    const userInfo = await this.IdmService.signIn(this.username, this.password);
     console.log("Login Success");
+    console.log(userInfo);
     this.modalCtrl.dismiss();
-    this.router.navigate(['onboarding-one'])
-  }
+    localStorage.setItem("uid", userInfo.uid);
+    this.router.navigate(['landing-page']);
+  };
 
 }

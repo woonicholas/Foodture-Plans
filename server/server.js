@@ -33,6 +33,7 @@ app.use('/',routes);
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
+    console.log(".env file loaded: " + process.env.EDAMAM_NUTRITION_BASE_URL);
 });
 
 
