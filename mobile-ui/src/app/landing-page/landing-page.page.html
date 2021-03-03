@@ -4,6 +4,11 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons *ngIf='!showDailyTotalPage' slot="primary">
+      <ion-button>
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -16,7 +21,7 @@
     </ion-segment-button>
   </ion-segment>
   <!-- Daily Totals Page -->
-  <div *ngIf='segmentFlag' class = "rounded-rect">
+  <div *ngIf='showDailyTotalPage' class = "rounded-rect">
     <ion-text> Welcome back, Jeremy!</ion-text>
     <ion-card>
       <ion-card-content>
@@ -40,27 +45,42 @@
     </ion-card>
   </div>
   <!-- Food Log -->
-  <div *ngIf='segmentFlag' class = "rounded-rect">
-    <ion-text> Welcome back, Jeremy!</ion-text>
-    <ion-card>
-      <ion-card-content>
-        <ion-text class = 'ion-text-center'><strong>Current Intake</strong></ion-text><br><br>
-        <ion-progress-bar value = "0.69" color="secondary"></ion-progress-bar>
-        <ion-text class = 'ion-text-center3'>1432/2000 Calories</ion-text><br><br>
-        <ion-text class = 'ion-text-center2'><strong>Breakdown</strong></ion-text><br>
-        
-        <ion-text>Carbs - 100g</ion-text>
-        <ion-progress-bar value = "0.5" color="warning"></ion-progress-bar><br>
-        <ion-text>Proteins - 200g </ion-text>
-        <ion-progress-bar value = "0.25" color = "danger"></ion-progress-bar><br>
-        <ion-text>Fats - 65g</ion-text>
-        <div class = "pbar">
-          <ion-progress-bar value = "0.3"></ion-progress-bar><br>
-        </div>
-        
-        Keep close to Nature's heart... and break clear away, once in awhile,
-        and climb a mountain or spend
-      </ion-card-content>
-    </ion-card>
+  <div *ngIf='!showDailyTotalPage' class = "">
+    <ion-grid class='sleep-data-table' *ngFor='let log of foodLogs'>
+      <ion-item-sliding>
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-label style='font-weight: bold; font-size: 20px;'>{{ log.name }}</ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-col size="4">
+                  <ion-label>Calories:</ion-label>
+                  <ion-note>{{log.calories}}</ion-note>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-label>Carbs:</ion-label>
+                  <ion-note>{{log.carbs}}</ion-note>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-label>Fat:</ion-label>
+                  <ion-note>{{log.fat}}</ion-note>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-label>Protein:</ion-label>
+                  <ion-note>{{log.protein}}</ion-note>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-label>Sugar:</ion-label>
+                  <ion-note>{{log.sugar}}</ion-note>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color='danger'>Delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-grid>
   </div>
 </ion-content>

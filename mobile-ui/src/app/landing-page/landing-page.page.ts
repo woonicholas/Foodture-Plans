@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FoodLogData } from '../data/food-log-data';
+import { DbService } from '../services/db.service';
+
 
 @Component({
   selector: 'app-landing-page',
@@ -6,20 +10,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-page.page.scss'],
 })
 export class LandingPagePage implements OnInit {
-  public segmentFlag: boolean
+  public showDailyTotalPage: boolean
   public uid: String
-  constructor() { 
+  public foodLogs: FoodLogData
+  constructor(private router:Router, private DbService: DbService) { 
     console.log("constructing..")
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.uid = localStorage.getItem("uid");
     console.log(this.uid);
-    this.segmentFlag = true;
+    this.showDailyTotalPage = true;
+    this.foodLogs = await this.DbService.getFoodLogs(this.uid);
+    console.log(this.foodLogs);
   }
 
   segmentChanged(){
-    this.segmentFlag = !this.segmentFlag;
+    this.showDailyTotalPage = !this.showDailyTotalPage;
     // console.log(this.daytimeSleepinessData);
     // console.log(this.sleepData);
   }

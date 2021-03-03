@@ -24,7 +24,8 @@ export class LoginModalComponent {
     console.log("Login Success");
     console.log(userInfo);
     this.modalCtrl.dismiss();
-    localStorage.setItem("uid", userInfo.uid);
+    if(userInfo)
+      localStorage.setItem("uid", userInfo.uid);
     this.router.navigate(['landing-page']);
   };
 
