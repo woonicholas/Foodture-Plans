@@ -9,21 +9,22 @@ export class IdmService {
   constructor(){}
 
   //signin endpoint 
-  signIn(username, password){
+  async signIn(username, password) {
     const body = {
       "email": username, 
       "password": password
     }
     console.log(JSON.stringify(body))
-    fetch(this.baseUrl + "/idm/signin",{
+    const result = await fetch(this.baseUrl + "/idm/signin",{
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
-    }).then((data) => {
-      console.log(data);
+    }).then(r => r.json()).then((data) => {
+      return data
     })
+    return result;
   }
 
   //signup endpoint
@@ -41,6 +42,8 @@ export class IdmService {
       body: JSON.stringify(body)
     }).then((data) => {
       console.log(data);
+      return data
     })
+    return null;
   }
 }
