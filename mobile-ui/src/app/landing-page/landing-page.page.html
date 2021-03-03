@@ -6,10 +6,41 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  
-  <div class = "rounded-rect">
+  <ion-segment (ionChange)="segmentChanged($event)" value="sunny">
+    <ion-segment-button value="sunny">
+      <ion-label>Daily Totals</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="rainy">
+      <ion-label>Food Log</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <!-- Daily Totals Page -->
+  <div *ngIf='segmentFlag' class = "rounded-rect">
+    <ion-text> Welcome back, Jeremy!</ion-text>
+    <ion-card>
+      <ion-card-content>
+        <ion-text class = 'ion-text-center'><strong>Current Intake</strong></ion-text><br><br>
+        <ion-progress-bar value = "0.69" color="secondary"></ion-progress-bar>
+        <ion-text class = 'ion-text-center3'>1432/2000 Calories</ion-text><br><br>
+        <ion-text class = 'ion-text-center2'><strong>Breakdown</strong></ion-text><br>
+        
+        <ion-text>Carbs - 100g</ion-text>
+        <ion-progress-bar value = "0.5" color="warning"></ion-progress-bar><br>
+        <ion-text>Proteins - 200g </ion-text>
+        <ion-progress-bar value = "0.25" color = "danger"></ion-progress-bar><br>
+        <ion-text>Fats - 65g</ion-text>
+        <div class = "pbar">
+          <ion-progress-bar value = "0.3"></ion-progress-bar><br>
+        </div>
+        
+        Keep close to Nature's heart... and break clear away, once in awhile,
+        and climb a mountain or spend
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <!-- Food Log -->
+  <div *ngIf='segmentFlag' class = "rounded-rect">
     <ion-text> Welcome back, Jeremy!</ion-text>
     <ion-card>
       <ion-card-content>
