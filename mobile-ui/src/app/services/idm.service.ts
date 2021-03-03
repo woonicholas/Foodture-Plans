@@ -23,6 +23,8 @@ export class IdmService {
       body: JSON.stringify(body)
     }).then(r => r.json()).then((data) => {
       return data
+    }).catch(r => {
+      console.log(r)
     })
     return result;
   }

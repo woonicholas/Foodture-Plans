@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'food-log',
     loadChildren: () => import('./food-log/food-log.module').then( m => m.FoodLogPageModule)
   },
+  {
+    path: 'food-logger-form',
+    loadChildren: () => import('./food-logger-form/food-logger-form.module').then( m => m.FoodLoggerFormPageModule)
+  },
 
 ];
 
