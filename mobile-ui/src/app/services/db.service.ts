@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DailyTotalData } from '../data/daily-total-data';
 import {FoodLogData} from '../data/food-log-data';
 
 @Injectable({
@@ -37,4 +38,17 @@ export class DbService {
     return result;
   }
 
+  async getDailyTotals(uid){
+    const result = await fetch(`${this.baseUrl}/db/getDailyTotals/${uid}/03-02-2021`,{
+      method: "get",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then( r=>r.json()).then((data) =>{
+      return new DailyTotalData(data); 
+    }).catch(r=>{
+      console.log(r)
+    })
+    return result;
+  }
 }

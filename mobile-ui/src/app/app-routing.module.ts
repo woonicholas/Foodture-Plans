@@ -30,6 +30,14 @@ const routes: Routes = [
     path: 'food-logger-form',
     loadChildren: () => import('./food-logger-form/food-logger-form.module').then( m => m.FoodLoggerFormPageModule)
   },
+  {
+    path: 'rec-page',
+    loadChildren: () => import('./rec-page/rec-page.module').then( m => m.RecPagePageModule)
+  },
+  {
+    path: 'profile-page',
+    loadChildren: () => import('./profile-page/profile-page.module').then( m => m.ProfilePagePageModule)
+  },
 
 ];
 
