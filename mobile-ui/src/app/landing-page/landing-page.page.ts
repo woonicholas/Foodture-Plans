@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FoodLogData } from '../data/food-log-data';
 import { DbService } from '../services/db.service';
+import { Utils } from '../util/util';
 import { DailyTotalData } from '../data/daily-total-data';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -13,12 +15,14 @@ import { DailyTotalData } from '../data/daily-total-data';
 export class LandingPagePage implements OnInit {
   public showDailyTotalPage: boolean
   public uid: String
-  public foodLogs: FoodLogData
+  public foodLogs: Array<FoodLogData>
+  public date: string
   public dailyTotalData: any
 
 
   constructor(private router:Router, private DbService: DbService) { 
     console.log("constructing..")
+    this.date = new Date().toISOString();
   }
 
   async ngOnInit() {
@@ -26,16 +30,44 @@ export class LandingPagePage implements OnInit {
     console.log(this.uid);
   
     this.showDailyTotalPage = true;
-    this.foodLogs = await this.DbService.getFoodLogs(this.uid);
-    this.dailyTotalData = await this.DbService.getDailyTotals(this.uid);
-    console.log(this.dailyTotalData);
+    this.fetchLogs()
+    this.date = new Date().toISOString();
+  }
+
+  async fetchFoodLogs(){
+    this.foodLogs = await this.DbService.getFoodLogs(this.uid,Utils.formatDate(this.date));
     console.log(this.foodLogs);
   }
 
+  async fetchDailyTotal(){
+    this.dailyTotalData = await this.DbService.getDailyTotals(this.uid,Utils.formatDate(this.date));
+    console.log(this.dailyTotalData);
+  }
+
+  fetchLogs(){
+    this.fetchDailyTotal()
+    this.fetchFoodLogs()
+  }
+
   segmentChanged(){
+    console.log("click")
     this.showDailyTotalPage = !this.showDailyTotalPage;
-    // console.log(this.daytimeSleepinessData);
-    // console.log(this.sleepData);
+  }
+
+  forwardDateOnClick() {
+    var result = new Date(this.date);
+    result.setDate(result.getDate() + 1);
+    this.date = result.toISOString();
+  }
+
+  backDateOnClick() {
+    var result = new Date(this.date);
+    result.setDate(result.getDate() - 1);
+    this.date = result.toISOString();
+  }
+
+  addNewOnClick(){
+    this.router.navigate(['food-logger-form']);
   }
 
 }
