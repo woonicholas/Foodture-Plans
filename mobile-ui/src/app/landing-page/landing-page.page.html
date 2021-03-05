@@ -8,7 +8,7 @@
       </ion-col>
       <ion-col style="text-align: center !important;" size=7>
         <ion-datetime display-format="MM-DD-YYYY" id='home-date'
-        [(ngModel)]="date" (ionChange)="fetchFoodLogs($event)"></ion-datetime>
+        [(ngModel)]="date" (ionChange)="fetchLogs($event)"></ion-datetime>
       </ion-col>
       <ion-col size=2>
         <ion-button color="light" class="date-button" (click) = "forwardDateOnClick()">
@@ -19,14 +19,16 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-segment (ionChange)="segmentChanged($event)" value="sunny">
-    <ion-segment-button value="daily-total">
-      <ion-label>Daily Totals</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="food-log">
-      <ion-label>Food Log</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <ion-item>
+    <ion-segment (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="daily-total">
+        <ion-label>Daily Totals</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="food-log">
+        <ion-label>Food Log</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item>
   <!-- Daily Totals Page -->
   <div *ngIf='showDailyTotalPage' class = "rounded-rect">
     <ion-text> Welcome back, Jeremy!</ion-text>
@@ -97,24 +99,20 @@
       </ion-col>
     </ion-row>
   </div>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button routerLink="/profile-page">
+        <ion-label>Profile</ion-label>
+        <ion-icon name="person"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button routerLink="/landing-page">
+        <ion-label>Home</ion-label>
+        <ion-icon name="home"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button routerLink="/rec-page">
+        <ion-label>Recs</ion-label>
+        <ion-icon name="fast-food"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
-<body>
-  <ion-app>
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button routerLink="/profile-page">
-          <ion-label>Profile</ion-label>
-          <ion-icon name="person"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button routerLink="/landing-page">
-          <ion-label>Home</ion-label>
-          <ion-icon name="home"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button routerLink="/rec-page">
-          <ion-label>Recs</ion-label>
-          <ion-icon name="fast-food"></ion-icon>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-app>
-</body>

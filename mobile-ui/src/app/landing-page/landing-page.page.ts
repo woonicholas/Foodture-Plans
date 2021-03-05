@@ -4,6 +4,7 @@ import { FoodLogData } from '../data/food-log-data';
 import { DbService } from '../services/db.service';
 import { Utils } from '../util/util';
 import { DailyTotalData } from '../data/daily-total-data';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -29,8 +30,7 @@ export class LandingPagePage implements OnInit {
     console.log(this.uid);
   
     this.showDailyTotalPage = true;
-    this.fetchFoodLogs();
-    this.fetchDailyTotal();
+    this.fetchLogs()
     this.date = new Date().toISOString();
   }
 
@@ -40,11 +40,17 @@ export class LandingPagePage implements OnInit {
   }
 
   async fetchDailyTotal(){
-    this.dailyTotalData = await this.DbService.getDailyTotals(this.uid);
+    this.dailyTotalData = await this.DbService.getDailyTotals(this.uid,Utils.formatDate(this.date));
     console.log(this.dailyTotalData);
   }
 
+  fetchLogs(){
+    this.fetchDailyTotal()
+    this.fetchFoodLogs()
+  }
+
   segmentChanged(){
+    console.log("click")
     this.showDailyTotalPage = !this.showDailyTotalPage;
   }
 

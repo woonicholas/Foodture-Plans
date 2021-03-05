@@ -53,8 +53,8 @@ export class DbService {
     return result;
   }
 
-  async getDailyTotals(uid){
-    const result = await fetch(`${this.baseUrl}/db/getDailyTotals/${uid}/03-02-2021`,{
+  async getDailyTotals(uid,date){
+    const result = await fetch(`${this.baseUrl}/db/getDailyTotals/${uid}/${date}`,{
       method: "get",
       headers: {
         "Content-Type": "application/json"
@@ -62,7 +62,7 @@ export class DbService {
     }).then( r=>r.json()).then((data) =>{
       return new DailyTotalData(data); 
     }).catch(r=>{
-      console.log(r)
+      return new DailyTotalData()
     })
     return result;
   }
