@@ -9,8 +9,8 @@ export class DbService {
   baseUrl: string = 'http://localhost:3001';
   constructor() { }
 
-  async getFoodLogs(uid) {
-    const result = await fetch(`${this.baseUrl}/db/getLogs/${uid}/03-02-2021`,{
+  async getFoodLogs(uid,date) {
+    const result = await fetch(`${this.baseUrl}/db/getLogs/${uid}/${date}`,{
       method: "get",
       headers: {
         "Content-Type": "application/json"
@@ -29,6 +29,21 @@ export class DbService {
       headers: {
         "Content-Type": "application/json"
       }
+    }).then(r => r.json()).then((data) => {
+      return data;
+    }).catch(r => {
+      console.log(r)
+    })
+    return result;
+  }
+
+  async postFoodLog(doc_id,log) {
+    const result = await fetch(`${this.baseUrl}/db/postLog/${doc_id}`,{
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(log)
     }).then(r => r.json()).then((data) => {
       return data;
     }).catch(r => {
