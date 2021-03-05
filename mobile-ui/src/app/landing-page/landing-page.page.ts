@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FoodLogData } from '../data/food-log-data';
 import { DbService } from '../services/db.service';
 import { Utils } from '../util/util';
+import { DailyTotalData } from '../data/daily-total-data';
 
 
 @Component({
@@ -15,6 +16,8 @@ export class LandingPagePage implements OnInit {
   public uid: String
   public foodLogs: Array<FoodLogData>
   public date: string
+  public dailyTotalData: any
+
 
   constructor(private router:Router, private DbService: DbService) { 
     console.log("constructing..")
@@ -24,14 +27,21 @@ export class LandingPagePage implements OnInit {
   async ngOnInit() {
     this.uid = localStorage.getItem("uid");
     console.log(this.uid);
+  
     this.showDailyTotalPage = true;
     this.fetchFoodLogs();
+    this.fetchDailyTotal();
     this.date = new Date().toISOString();
   }
 
   async fetchFoodLogs(){
     this.foodLogs = await this.DbService.getFoodLogs(this.uid,Utils.formatDate(this.date));
     console.log(this.foodLogs);
+  }
+
+  async fetchDailyTotal(){
+    this.dailyTotalData = await this.DbService.getDailyTotals(this.uid);
+    console.log(this.dailyTotalData);
   }
 
   segmentChanged(){
