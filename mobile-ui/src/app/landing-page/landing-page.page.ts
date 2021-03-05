@@ -13,7 +13,7 @@ import { Utils } from '../util/util';
 export class LandingPagePage implements OnInit {
   public showDailyTotalPage: boolean
   public uid: String
-  public foodLogs: FoodLogData
+  public foodLogs: Array<FoodLogData>
   public date: string
 
   constructor(private router:Router, private DbService: DbService) { 
