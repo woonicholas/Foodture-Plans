@@ -1,9 +1,31 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>food-logger-form</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-item-divider color="tertiary">
+    <ion-label>Add an item to your food Log</ion-label>
+  </ion-item-divider>
+  <form (ngSubmit)="getNutrition()" #foodLoggerForm="ngForm">
+    <ion-item class='form-group'>
+      <ion-label for='ingredient'>Ingredient</ion-label>
+      <ion-input value="" class='form-control' id='ingredient' 
+        [(ngModel)]="ingredient" name="ingredient" required='true'></ion-input>
+    </ion-item>
+    <ion-item class='form-group'>
+      <ion-label for='quantity'>Quantity</ion-label>
+      <ion-input class='form-control' id='quantity'
+        [(ngModel)]="quantity" name="quantity" required='true'></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col style="text-align: center !important;" >
+        <ion-button type='submit' class='btn' class='ion-padding' color='tertiary' routerLink="/landing-page">Log Item</ion-button> 
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>
