@@ -21,6 +21,14 @@ exports.signup = (req, res, next) => {
             email: user.email,
             uid: user.uid
         });
+        await fs.collection('food-history').doc(user.uid).set({
+            "num-logs": 0,
+            calories: 0,
+            fat: 0,
+            carbs: 0,
+            sugar: 0,
+            protein: 0
+        });
         console.log("Successfully added uid to firestore: " + user.uid)
         res.status(200).send(user)
     })

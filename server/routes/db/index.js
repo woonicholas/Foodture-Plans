@@ -18,5 +18,6 @@ db.get('/getWeightLog/:uid/:date',controller.getWeightLog)
 
 db.post('/postWeightLog/:uid',controller.postWeightLog)
 
+db.get('/getPersonalModel/:uid/',controller.getPersonalModel)
  
 module.exports = db;

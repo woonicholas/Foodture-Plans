@@ -4,7 +4,6 @@ import { FoodLogData } from '../data/food-log-data';
 import { DbService } from '../services/db.service';
 import { Utils } from '../util/util';
 import { DailyTotalData } from '../data/daily-total-data';
-import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -67,6 +66,7 @@ export class LandingPagePage implements OnInit {
   }
 
   addNewOnClick(){
+    console.log("clicked")
     this.router.navigate(['food-logger-form']);
   }
 
