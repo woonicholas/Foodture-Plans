@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DailyTotalData } from '../data/daily-total-data';
 import {FoodLogData} from '../data/food-log-data';
+import { UserData } from '../data/user-data';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class DbService {
   baseUrl: string = 'http://localhost:3001';
   constructor() { }
 
-  async getFoodLogs(uid) {
-    const result = await fetch(`${this.baseUrl}/db/getLogs/${uid}/03-02-2021`,{
+  async getFoodLogs(uid,date) {
+    const result = await fetch(`${this.baseUrl}/db/getLogs/${uid}/${date}`,{
       method: "get",
       headers: {
         "Content-Type": "application/json"
@@ -38,8 +39,24 @@ export class DbService {
     return result;
   }
 
-  async getDailyTotals(uid){
-    const result = await fetch(`${this.baseUrl}/db/getDailyTotals/${uid}/03-02-2021`,{
+  async postFoodLog(doc_id,log) {
+    const result = await fetch(`${this.baseUrl}/db/postLog/${doc_id}`,{
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(log)
+    }).then(r => r.json()).then((data) => {
+      return data;
+    }).catch(r => {
+      console.log(r)
+      return [];
+    })
+    return result;
+  }
+
+  async getDailyTotals(uid,date){
+    const result = await fetch(`${this.baseUrl}/db/getDailyTotals/${uid}/${date}`,{
       method: "get",
       headers: {
         "Content-Type": "application/json"
@@ -47,8 +64,23 @@ export class DbService {
     }).then( r=>r.json()).then((data) =>{
       return new DailyTotalData(data); 
     }).catch(r=>{
+      return new DailyTotalData()
+    })
+    return result;
+  }
+
+  async getUserStats(uid) {
+    const result = await fetch(`${this.baseUrl}/db/getUser/${uid}`,{
+      method: "get",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then( r=>r.json()).then((data) =>{
+      return new UserData(data); 
+    }).catch(r=>{
       console.log(r)
     })
     return result;
   }
+
 }
