@@ -279,7 +279,6 @@ exports.getDailyTotals = async (req, res, next) => {
         res.status(404).send({ 'message': 'User has no daily totals for date specified', date});
     } else {
         try{
-            
             // const updatedDoc = await foodLogRef.collection(currentTime).get();
             res.status(200).send({"Message": "Successfully retrieved daily totals logs", "daily-totals": doc.data()});
         } catch (error) {
