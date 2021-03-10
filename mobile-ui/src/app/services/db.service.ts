@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DailyTotalData } from '../data/daily-total-data';
 import {FoodLogData} from '../data/food-log-data';
+import { UserData } from '../data/user-data';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,7 @@ export class DbService {
       return data;
     }).catch(r => {
       console.log(r)
+      return [];
     })
     return result;
   }
@@ -66,4 +68,19 @@ export class DbService {
     })
     return result;
   }
+
+  async getUserStats(uid) {
+    const result = await fetch(`${this.baseUrl}/db/getUser/${uid}`,{
+      method: "get",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then( r=>r.json()).then((data) =>{
+      return new UserData(data); 
+    }).catch(r=>{
+      console.log(r)
+    })
+    return result;
+  }
+
 }

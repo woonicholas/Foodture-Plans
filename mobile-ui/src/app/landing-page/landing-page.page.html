@@ -91,13 +91,15 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-grid>
-    <ion-row>
-      <ion-col *ngIf='!showDailyTotalPage' style="text-align: center !important;">
-          <ion-button (click)="addNewOnClick()" expand="block" size='large' color='light'>
-            <ion-icon name="add-circle-outline"s></ion-icon>
-          </ion-button>
-      </ion-col>
-    </ion-row>
+    <ion-item>
+      <ion-row name="justify-content-center">
+        <ion-col *ngIf='!showDailyTotalPage' style="text-align: center !important;">
+            <ion-button (click)="addNewOnClick()" expand="block" size='large' color='light' class="addNewButton">
+              <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-item>
   </div>
   <ion-tabs>
     <ion-tab-bar slot="bottom">

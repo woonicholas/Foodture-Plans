@@ -109,6 +109,8 @@ exports.postLog = async (req, res, next) => {
 
     const foodLogRef = fs.collection('food-logs').doc(uid);
 
+    const foodHistoryRef = fs.collection('food-history').doc(uid);
+
     const dailyTotalRef = fs.collection('users').doc(uid).collection('daily-totals').doc(currentTime);
 
     const doc = await userRef.get();
@@ -149,6 +151,14 @@ exports.postLog = async (req, res, next) => {
                         console.log("[INFO] Successfully created daily totals for: " + currentTime)
                     }
                 });
+            await foodHistoryRef.update({
+                calories: firebase.firestore.FieldValue.increment(body.calories),
+                fat: firebase.firestore.FieldValue.increment(body.fat.quantity),
+                carbs: firebase.firestore.FieldValue.increment(body.carbs.quantity),
+                sugar: firebase.firestore.FieldValue.increment(body.sugar.quantity),
+                protein: firebase.firestore.FieldValue.increment(body.protein.quantity),
+                "num_logs": firebase.firestore.FieldValue.increment(1) },
+            )
 
             // const updatedDoc = await foodLogRef.collection(currentTime).get();
             res.status(200).send({"Message": "Successfully logged food data and updated daily totals"});
@@ -347,15 +357,9 @@ exports.getWeightLog = async (req, res, next) => {
         return res.status(400).send(({
             message: "params cannot be empty. please supply a uid"
         }))
-    } if(!req.body) {
-        return res.status(400).send(({
-            message: "body cannot be empty"
-        }))
-    }
+    } 
 
     console.log("params: ", req.params);
-
-    console.log("body: ", req.body);
 
     const uid = req.params.uid;
     const date = req.params.date;
@@ -371,6 +375,48 @@ exports.getWeightLog = async (req, res, next) => {
             
             // const updatedDoc = await foodLogRef.collection(currentTime).get();
             res.status(200).send({"Message": "Successfully retrieved weight log for: " + date, "weight": doc.data()});
+        } catch (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("[ERR] ", errorMessage, ": ", errorCode);
+            res.status(400).send(error);    
+        }
+    }
+}
+
+exports.getPersonalModel = async (req, res, next) => {
+    if (!req.params) {
+        return res.status(400).send(({
+            message: "params cannot be empty. please supply a uid"
+        }))
+    } 
+
+    console.log("params: ", req.params);
+
+    const uid = req.params.uid;
+
+
+    const foodHistoryRef = fs.collection('food-history').doc(uid);
+
+    const results = await foodHistoryRef.get();
+
+    if(!results.exists){
+        res.status(404).send({ 'message': 'User has no food logs'});
+    } else {
+        try{
+            let data = results.data();
+
+            let foodHistoryAvg = {
+                sugar: data.sugar / data.num_logs,
+                protein: data.protein / data.num_logs,
+                fat: data.fat / data.num_logs,
+                calories: data.calories / data.num_logs,
+                carbs: data.carbs / data.num_logs
+            }
+
+            console.log(foodHistoryAvg);
+            
+            res.status(200).send({"Message": "Success. Returned average of person's food history", "data": foodHistoryAvg});
         } catch (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
