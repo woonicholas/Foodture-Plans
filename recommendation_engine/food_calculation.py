@@ -90,11 +90,6 @@ def calculate_recommendation_score(data_set, personal_vector):
 
 
 
-
-
-
-
-
 def get_all_recommendations(file_name, personal_model):
     model_fields = ["product_name", "carbohydrates_100g","proteins_100g","sugars_100g", "fat_100g"]
     d = build_data_set(file_name, model_fields)

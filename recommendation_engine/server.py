@@ -1,6 +1,8 @@
 from flask import Flask, request
 from food_calculation import get_all_recommendations
 from random import randint
+import requests
+
 app= Flask(__name__)
 
 """
@@ -11,20 +13,29 @@ Create endpoints for taking recommendation:
         -> process data 
         -> return recommendations
 """
-
+def process_data(data):
+    fields = ["carbs", "protein", "sugar", "fat"]
+    return_list = []
+    for f in fields:
+        return_list.append(data[f])
+    return return_list
 
 @app.route("/")
 def get_status():
     return "running"
 
-@app.route("/getRecommendation", methods =["POST"])
-def get_recommendation():
+@app.route("/getRecommendation/<uid>", methods =["GET"])
+def get_recommendation(uid):
     return_json = {}
     list_of_recs = []
-    if request.method == "POST":
+    url_string = "http://localhost:3001/db/getPersonalModel/" + uid 
+    r = requests.get(url_string)
+    data = r.json()["data"]
+    personal_model = process_data(data)
+    print(personal_model)
+    if request.method == "GET":
         data = request.get_json()
-        personal_model = data["personal_model"]
-        number_of_recs = data["number_of_recs"] 
+        number_of_recs = 10
         recs = get_all_recommendations("food1.tsv", personal_model)
         for i in range(number_of_recs):
             index = randint(0,len(recs))
@@ -38,3 +49,5 @@ def get_recommendation():
         return "false"
 
 
+# http://localhost:3001/db/getPersonalModel/rzNHETzjjvSOpiTHIBuVHYxvdFH3
+# rzNHETzjjvSOpiTHIBuVHYxvdFH3
