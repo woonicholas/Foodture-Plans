@@ -35,17 +35,17 @@
     <ion-card>
       <ion-card-content *ngIf='dailyTotalData'>
         <ion-text class = 'ion-text-center'><strong>Current Intake</strong></ion-text><br><br>
-        <ion-progress-bar value = "0.69" color="secondary"></ion-progress-bar>
+        <ion-progress-bar value = "{{calPct}}" color="secondary"></ion-progress-bar>
         <ion-text class = 'ion-text-center3'>{{dailyTotalData.dailyCalories}}g/2000.00g Calories</ion-text><br><br>
         <ion-text class = 'ion-text-center2'><strong>Breakdown</strong></ion-text><br>
         
         <ion-text>Carbs - {{dailyTotalData.dailyCarbs}}g/500.00g</ion-text>
-        <ion-progress-bar value = "0.05" color="warning"></ion-progress-bar><br>
+        <ion-progress-bar value = "{{carbPct}}" color="warning"></ion-progress-bar><br>
         <ion-text>Proteins - {{dailyTotalData.dailyProtein}}g/250.00g </ion-text>
-        <ion-progress-bar value = "0.25" color = "danger"></ion-progress-bar><br>
+        <ion-progress-bar value = "{{proteinPct}}" color = "danger"></ion-progress-bar><br>
         <ion-text>Fats - {{dailyTotalData.dailyFat}}g/80.00g</ion-text>
         <div class = "pbar">
-          <ion-progress-bar value = "0.9"></ion-progress-bar><br>
+          <ion-progress-bar value = "{{fatPct}}"></ion-progress-bar><br>
         </div>
         
         Keep close to Nature's heart... and break clear away, once in awhile,

@@ -17,6 +17,10 @@ export class LandingPagePage implements OnInit {
   public foodLogs: Array<FoodLogData>
   public date: string
   public dailyTotalData: any
+  public calPct: number
+  public carbPct: number
+  public proteinPct: number
+  public fatPct: number
 
 
   constructor(private router:Router, private DbService: DbService) { 
@@ -29,6 +33,16 @@ export class LandingPagePage implements OnInit {
     console.log(this.uid);
   
     this.showDailyTotalPage = true;
+    this.foodLogs = await this.DbService.getFoodLogs(this.uid);
+    this.dailyTotalData = await this.DbService.getDailyTotals(this.uid);
+ 
+    //set daily percentage bar numbers need to be changed later with rec system 
+    this.calPct = this.dailyTotalData.dailyCalories/2000.00
+    this.carbPct = this.dailyTotalData.dailyCarbs/500.00
+    this.proteinPct = this.dailyTotalData.dailyProtein/250.00
+    this.fatPct = this.dailyTotalData.dailyFat/80
+
+    console.log(this.dailyTotalData);
     this.fetchLogs()
     this.date = new Date().toISOString();
   }
