@@ -9,6 +9,7 @@ import { UserData } from '../data/user-data';
 export class DbService {
 
   baseUrl: string = 'http://localhost:3001';
+  // flaskUrl: string = 'http://localhost:5000';
   constructor() { }
 
   async getFoodLogs(uid,date) {
@@ -82,5 +83,9 @@ export class DbService {
     })
     return result;
   }
+
+  // async getRecommendation(uid){
+  //   const result = await fetch(`${this.baseUrl}`)
+  // }
 
 }

@@ -33,8 +33,8 @@ export class LandingPagePage implements OnInit {
     console.log(this.uid);
   
     this.showDailyTotalPage = true;
-    this.foodLogs = await this.DbService.getFoodLogs(this.uid);
-    this.dailyTotalData = await this.DbService.getDailyTotals(this.uid);
+    this.foodLogs = await this.DbService.getFoodLogs(this.uid,Utils.formatDate(this.date));
+    this.dailyTotalData = await this.DbService.getDailyTotals(this.uid,Utils.formatDate(this.date));
  
     //set daily percentage bar numbers need to be changed later with rec system 
     this.calPct = this.dailyTotalData.dailyCalories/2000.00
