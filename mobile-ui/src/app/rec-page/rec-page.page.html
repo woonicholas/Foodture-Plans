@@ -1,54 +1,54 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>rec-page</ion-title>
+    <ion-title>Food Recs</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-    <ion-list>
-      <ion-list-header>
-        Food Recommendations
-      </ion-list-header>
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="../../assets/burger.jpg">
-        </ion-avatar>
-        <ion-label>
-          <h2>Hamburger</h2>
-          <h3>860g Calories</h3>
-          <ion-item><p>620g Carbs <br>150g Fat<br> 90g Protein</p></ion-item>
-          
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <!-- <ion-avatdar slot="start">
-          <img src="./avatar-han.png">
-        </ion-avatar> -->
-        <ion-label>
-          <h2>Han</h2>
-          <h3>Look, kid...</h3>
-          <p>I've got enough on my plate as it is, and I...</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
+<ion-content>
+    <img class="food-banner" src="../../assets/food3.png"/>
+      <!-- <ion-list> -->
+          <div class = "spin" *ngIf='!recFood'>
+            <ion-spinner ></ion-spinner>
+          </div>
+          <div *ngIf= 'recFood' >
+            <div *ngFor = 'let rec of recFood'>
+              <ion-item >
+                  <ion-label >
+                    <h2><strong>{{rec.product_name}}</strong></h2>
+                    <h3>{{rec.calories}}g Calories</h3>
+                    <ion-item><p>{{rec.carbs}}g Carbs <br>{{rec.fat}}g Fat<br> {{rec.protein}}g Protein <br>{{rec.sugar}}g Sugar</p></ion-item>         
+                  </ion-label>
+              </ion-item>
+            </div>
+          </div>
+      <!-- </ion-list> -->
+
 </ion-content>
-<body>
-  <ion-app>
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button routerLink="/profile-page">
-          <ion-label>Profile</ion-label>
-          <ion-icon name="person"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button routerLink="/landing-page">
-          <ion-label>Home</ion-label>
-          <ion-icon name="home"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button routerLink="/rec-page">
-          <ion-label>Recs</ion-label>
-          <ion-icon name="fast-food"></ion-icon>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-app>
-</body>
+<ion-footer>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button routerLink="/profile-page">
+        <ion-label>Profile</ion-label>
+        <ion-icon name="person"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button routerLink="/landing-page">
+        <ion-label>Home</ion-label>
+        <ion-icon name="home"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button routerLink="/rec-page">
+        <ion-label>Recs</ion-label>
+        <ion-icon name="fast-food"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-footer>
+
+<!-- <body> -->
+  <!-- <ion-app>
+
+  </ion-app> -->
+<!-- </body> -->

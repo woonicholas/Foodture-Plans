@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>food-logger-form</ion-title>
+    <ion-title>Logger</ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -24,7 +24,7 @@
     </ion-item>
     <ion-row>
       <ion-col style="text-align: center !important;" >
-        <ion-button type='submit' class='btn' class='ion-padding' color='tertiary' routerLink="/landing-page">Log Item</ion-button> 
+        <ion-button type='submit' class='btn' class='ion-padding' color='tertiary' (click)= "returnOnClick()">Log Item</ion-button> 
       </ion-col>
     </ion-row>
   </form>
